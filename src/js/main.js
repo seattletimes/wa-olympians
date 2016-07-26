@@ -13,7 +13,7 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
   $scope.headers = [
     { title: "Name", short: "athlete", medal: "" },
     { title: "Sport", short: "sport", medal: "" },
-    { title: "Competed", short: "years", medal: "" },
+    { title: "Competed", short: "years_shortened", medal: "" },
     { title: "Birthplace", short: "birthplace", medal: "" },
     { title: "Gold", short: "gold", medal: "medal" },
     { title: "Silver", short: "silver", medal: "medal" },
@@ -26,7 +26,6 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
   var prefilter = $filter("filter");
 
   $scope.sortTable = function(header) {
-    console.log(header)
     if ($scope.selected == header) {
       $scope.sortOrder *= -1;
     } else {
@@ -41,6 +40,8 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
     $scope.all.sort(function(a, b) {
       a = a[header.short];
       b = b[header.short];
+      // if (typeOf(a) == "string") { a = a.slice(",")[0,3] * 1 }
+      // if (typeOf(b) == "string") { b = b.slice(",")[0,3] * 1 }
 
       if (a > b) {
         return 1 * $scope.sortOrder;
@@ -52,17 +53,19 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
     });
 
     $scope.index = 0;
-
-    $scope.advance = function(direction) {
-      var length = prefilter($scope.all, $scope.searchText).length;
-      if (direction < 0 && $scope.index <= 0) return;
-      if (direction > 0 && ($scope.index + 20) >= length) return;
-      $scope.index += (20 * direction);
-    }
-
-    $scope.$watch("searchText", function() {
-      $scope.index = 0;
-    });
   };
+
+  $scope.index = 0;
+
+  $scope.advance = function(direction) {
+    var length = prefilter($scope.all, $scope.searchText).length;
+    if (direction < 0 && $scope.index <= 0) return;
+    if (direction > 0 && ($scope.index + 20) >= length) return;
+    $scope.index += (20 * direction);
+  }
+
+  $scope.$watch("searchText", function() {
+    $scope.index = 0;
+  });
   $scope.sortTable($scope.selected);
 }]);

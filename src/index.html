@@ -29,7 +29,7 @@
           <tr ng-repeat="a in all | filter:searchText | limitTo : 20 : index">
             <td class="name">{{a.athlete}}
             <td class="sport">{{a.sport}}
-            <td class="years">{{a.season == 0 ? "Summer" : "Winter"}} {{a.years}}
+            <td class="years">{{a.season}} {{a.years}}
             <td class="birthplace">{{a.birthplace}}
             <td class="gold medal">{{a.gold}}
             <td class="silver medal">{{a.silver}}
@@ -49,7 +49,15 @@
     </responsive-child>
 
     <script>
-      var olympicsData = <%= JSON.stringify(json.WashingtonianHistoricalOlympians_BornInWashington) %>
+      <%
+        var data = [];
+        json.WashingtonianHistoricalOlympians_BornInWashington.forEach(function(row) {
+          row.season = (row.season == "0") ? "Summer" : "Winter";
+          row.years_shortened = row.years.toString().slice(0,4);
+          data.push(row)
+        });
+      %>
+      var olympicsData = <%= JSON.stringify(data) %>
     </script>
 
     <script src="app.js" async></script>
