@@ -16,19 +16,24 @@
 
     <responsive-child>
       <div ng-controller="OlympicsController" class="outer" ng-cloak>
+        <div class="search-container">
+          <span class="search">Search:</span>
+          <input type="text" ng-model="searchText">
+        </div>
+
         <table>
           <tr>
-            <th ng-repeat="header in headers" class="{{header.short}}" ng-click="sortTable(header)">{{header.title}}</th>
+            <th ng-repeat="header in headers" class="{{header.short}} {{header.medal}}" ng-class="{selected: header == selected}" ng-click="sortTable(header)"><div class="title">{{header.title}}</div> <div class="medal-swatch" ng-if="header.medal"></div> </th>
           </tr>
 
-          <tr ng-repeat="a in all">
+          <tr ng-repeat="a in all | filter:searchText">
             <td class="name">{{a.athlete}}
             <td class="sport">{{a.sport}}
             <td class="years">{{a.season == 0 ? "Summer" : "Winter"}} {{a.years}}
             <td class="birthplace">{{a.birthplace}}
-            <td class="gold">{{a.gold}}
-            <td class="silver">{{a.silver}}
-            <td class="bronze">{{a.bronze}}
+            <td class="gold medal">{{a.gold}}
+            <td class="silver medal">{{a.silver}}
+            <td class="bronze medal">{{a.bronze}}
           </tr>
         </table>
       </div>

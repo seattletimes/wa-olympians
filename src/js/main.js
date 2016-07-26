@@ -11,13 +11,13 @@ app.controller("OlympicsController", ["$scope", function($scope) {
   $scope.all = olympicsData;
 
   $scope.headers = [
-    { title: "Name", short: "athlete" },
-    { title: "Sport", short: "sport" },
-    { title: "Competed", short: "years" },
-    { title: "Birthplace", short: "birthplace" },
-    { title: "Gold", short: "gold" },
-    { title: "Silver", short: "silver" },
-    { title: "Bronze", short: "bronze" }
+    { title: "Name", short: "athlete", medal: "" },
+    { title: "Sport", short: "sport", medal: "" },
+    { title: "Competed", short: "years", medal: "" },
+    { title: "Birthplace", short: "birthplace", medal: "" },
+    { title: "Gold", short: "gold", medal: "medal" },
+    { title: "Silver", short: "silver", medal: "medal" },
+    { title: "Bronze", short: "bronze", medal: "medal" }
   ];
 
   $scope.selected = $scope.headers[0];
