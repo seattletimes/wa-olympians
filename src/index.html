@@ -26,7 +26,7 @@
             <th ng-repeat="header in headers" class="{{header.short}} {{header.medal}}" ng-class="{selected: header == selected}" ng-click="sortTable(header)"><div class="title">{{header.title}}</div> <div class="medal-swatch" ng-if="header.medal"></div> </th>
           </tr>
 
-          <tr ng-repeat="a in all | filter:searchText">
+          <tr ng-repeat="a in all | filter:searchText | limitTo : 20 : index">
             <td class="name">{{a.athlete}}
             <td class="sport">{{a.sport}}
             <td class="years">{{a.season == 0 ? "Summer" : "Winter"}} {{a.years}}
@@ -36,7 +36,16 @@
             <td class="bronze medal">{{a.bronze}}
           </tr>
         </table>
+
+        <div class="arrows">
+          <div class="advance" ng-click="advance(-1)">< Previous</div> | <div class="advance" ng-click="advance(1)">Next ></div>
+        </div>
+        
+        <div class="source"><em>Source: tktk</em></div>
+        <div class="credit">AUDREY CARLSEN / THE SEATTLE TIMES</div>
+
       </div>
+
     </responsive-child>
 
     <script>

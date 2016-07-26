@@ -7,7 +7,7 @@ require("angular");
 
 var app = angular.module("olympics-table", []);
 
-app.controller("OlympicsController", ["$scope", function($scope) {
+app.controller("OlympicsController", ["$scope", "$filter", function($scope, $filter) {
   $scope.all = olympicsData;
 
   $scope.headers = [
@@ -23,7 +23,10 @@ app.controller("OlympicsController", ["$scope", function($scope) {
   $scope.selected = $scope.headers[0];
   $scope.sortOrder = -1;
 
+  var prefilter = $filter("filter");
+
   $scope.sortTable = function(header) {
+    console.log(header)
     if ($scope.selected == header) {
       $scope.sortOrder *= -1;
     } else {
@@ -46,6 +49,19 @@ app.controller("OlympicsController", ["$scope", function($scope) {
       } else if (a == b) {
         return 0;
       }
+    });
+
+    $scope.index = 0;
+
+    $scope.advance = function(direction) {
+      var length = prefilter($scope.all, $scope.searchText).length;
+      if (direction < 0 && $scope.index <= 0) return;
+      if (direction > 0 && ($scope.index + 20) >= length) return;
+      $scope.index += (20 * direction);
+    }
+
+    $scope.$watch("searchText", function() {
+      $scope.index = 0;
     });
   };
   $scope.sortTable($scope.selected);
