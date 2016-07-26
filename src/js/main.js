@@ -9,6 +9,7 @@ var app = angular.module("olympics-table", []);
 
 app.controller("OlympicsController", ["$scope", "$filter", function($scope, $filter) {
   $scope.all = olympicsData;
+  $scope.length = $scope.all.length;
 
   $scope.headers = [
     { title: "Name", short: "athlete", medal: "" },
@@ -40,8 +41,6 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
     $scope.all.sort(function(a, b) {
       a = a[header.short];
       b = b[header.short];
-      // if (typeOf(a) == "string") { a = a.slice(",")[0,3] * 1 }
-      // if (typeOf(b) == "string") { b = b.slice(",")[0,3] * 1 }
 
       if (a > b) {
         return 1 * $scope.sortOrder;
@@ -58,14 +57,14 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
   $scope.index = 0;
 
   $scope.advance = function(direction) {
-    var length = prefilter($scope.all, $scope.searchText).length;
     if (direction < 0 && $scope.index <= 0) return;
-    if (direction > 0 && ($scope.index + 20) >= length) return;
+    if (direction > 0 && ($scope.index + 20) >= $scope.length) return;
     $scope.index += (20 * direction);
   }
 
   $scope.$watch("searchText", function() {
     $scope.index = 0;
+    $scope.length = prefilter($scope.all, $scope.searchText).length;
   });
   $scope.sortTable($scope.selected);
 }]);
