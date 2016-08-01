@@ -26,21 +26,28 @@
             <th ng-repeat="header in headers" class="{{header.short}} {{header.medal}}" ng-class="{selected: header == selected}" ng-click="sortTable(header)"><div class="title">{{header.title}}</div> <div class="medal-swatch" ng-if="header.medal"></div> </th>
           </tr>
 
-          <tr ng-repeat="a in all | filter:searchText | limitTo : 20 : index">
-            <td class="name">{{a.athlete}}
+          <tr ng-repeat="a in all | filter:searchText | limitTo : 15 : index">
+            <td class="name">{{a.first}} {{a.last}}
             <td class="sport">{{a.sport}}
             <td class="years">{{a.season}} {{a.years}}
-            <td class="birthplace">{{a.birthplace}}
-            <td class="gold medal">{{a.gold}}
-            <td class="silver medal">{{a.silver}}
-            <td class="bronze medal">{{a.bronze}}
+            <td class="affiliation">{{a.affiliation}}
+            <td ng-mouseover="showTooltip(a, 'Gold')" class="gold medal" ng-class="{bold: a.gold > 0}">{{a.gold}}
+            <td ng-mouseover="showTooltip(a, 'Silver')" class="silver medal" ng-class="{bold: a.silver > 0}">{{a.silver}}
+            <td ng-mouseover="showTooltip(a, 'Bronze')" class="bronze medal" ng-class="{bold: a.bronze > 0}">{{a.bronze}}
           </tr>
         </table>
 
-        <div class="total">Total: {{length}}</div>
+        <div class="tooltip" ng-style="{left: left + 'px', top: top + 'px'}">
+          <div class="medal-label">{{tooltip.medal}}</div>
+          <div class="medal-box" ng-repeat="m in tooltip.data">
+            <div>{{m.Games}} ({{m.City}})</div>
+            <div><em>{{m.Event}}</em></div>
+          </div>
+        </div>
 
         <div class="arrows">
-          <div class="advance" ng-click="advance(-1)">< Previous</div> | <div class="advance" ng-click="advance(1)">Next ></div>
+          <div class="pages">Page {{index / 15 + 1}} of {{round(length / 15) + 1}}</div>
+          <div class="advance" ng-click="advance(-1)" ng-class="{disabled: index < 1}">< Previous</div> <span ng-class="{disabled: index < 1 || (index + 15) >= length}">|</span> <div class="advance" ng-click="advance(1)" ng-class="{disabled: (index + 15) >= length}">Next ></div>
         </div>
         
         <div class="credit">AUDREY CARLSEN / THE SEATTLE TIMES</div>
@@ -57,8 +64,18 @@
           row.years_shortened = row.years.toString().slice(0,4);
           data.push(row)
         });
+
+        var medalData = {};
+        json.WashingtonianHistoricalOlympians_MedalDetails.forEach(function(row) {
+          if (!medalData[row.Athlete]) medalData[row.Athlete] = {};
+          if (row.Medal) {
+            if (!medalData[row.Athlete][row.Medal]) medalData[row.Athlete][row.Medal] = [];
+              medalData[row.Athlete][row.Medal].push(row)
+          }
+        });
       %>
-      var olympicsData = <%= JSON.stringify(data) %>
+      var olympicsData = <%= JSON.stringify(data) %>;
+      var medalData = <%= JSON.stringify(medalData) %>;
     </script>
 
     <script src="app.js" async></script>

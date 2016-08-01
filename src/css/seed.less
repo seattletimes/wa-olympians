@@ -19,12 +19,21 @@ input {
 
 .arrows {
   text-align: center;
+  
+  padding-top: 10px;
+  font-size: 16px;
+
 }
+
+.disabled, .disabled:hover {
+  color: @df-border-gray !important;
+  cursor: default !important;
+}
+
 .advance {
   display: inline-block;
   font-weight: bold;
   cursor: pointer;
-  font-size: 14px;
 
   &:hover {
     color: lighten(#1b4c89, 10%);
@@ -63,7 +72,7 @@ th {
     }
   }
 
-.birthplace {
+.affiliation {
   @media @break {
     display: none;
   }
@@ -114,19 +123,70 @@ td, th {
 td {
   font-size: 14px;
 
+  &.bold {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
   @media @mobile {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
-.total {
-  font-size: 16px;
-  font-weight: bold;
-  padding-top: 10px;
+// .total {
+//   font-size: 14px;
+//   font-weight: bold;
+//   padding-top: 10px;
+//   float: right;
+
+//   @media @mobile {
+//     padding-left: 4px;
+//   }
+// }
+
+.pages {
+  font-size: 14px;
+  padding-bottom: 2px;
+  font-style: italic;
+  float: left;
   padding-left: 10px;
 
   @media @mobile {
     padding-left: 4px;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  background: white;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid @df-border-gray;
+  font-size: 11px;
+  transform: translateX(-100% - 5px) translateY(-50%);
+  min-width: 140px;
+
+  @media @mobile {
+    display: none;
+  }
+
+  &.hide {
+    display: none;
+  }
+
+  .medal-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-bottom: 2px;
+    font-size: 10px;
+  }
+
+  .medal-box {
+    padding-bottom: 4px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -141,8 +201,5 @@ td {
 }
 .credit {
   font-size: 11px;
-
-  @media @break {
-    padding-top: 10px;
-  }
+  padding-top: 10px;
 }

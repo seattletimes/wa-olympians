@@ -10,12 +10,13 @@ var app = angular.module("olympics-table", []);
 app.controller("OlympicsController", ["$scope", "$filter", function($scope, $filter) {
   $scope.all = olympicsData;
   $scope.length = $scope.all.length;
+  $scope.tooltip = {};
 
   $scope.headers = [
-    { title: "Name", short: "athlete", medal: "" },
+    { title: "Name", short: "last", medal: "" },
     { title: "Sport", short: "sport", medal: "" },
     { title: "Competed", short: "years_shortened", medal: "" },
-    { title: "Birthplace", short: "birthplace", medal: "" },
+    { title: "Affiliation", short: "affiliation", medal: "" },
     { title: "Gold", short: "gold", medal: "medal" },
     { title: "Silver", short: "silver", medal: "medal" },
     { title: "Bronze", short: "bronze", medal: "medal" }
@@ -40,7 +41,9 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
 
     $scope.all.sort(function(a, b) {
       a = a[header.short];
+      if (typeof a == "string") a = a.toLowerCase();
       b = b[header.short];
+      if (typeof b == "string") b = b.toLowerCase();
 
       if (a > b) {
         return 1 * $scope.sortOrder;
@@ -58,8 +61,8 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
 
   $scope.advance = function(direction) {
     if (direction < 0 && $scope.index <= 0) return;
-    if (direction > 0 && ($scope.index + 20) >= $scope.length) return;
-    $scope.index += (20 * direction);
+    if (direction > 0 && ($scope.index + 15) >= $scope.length) return;
+    $scope.index += (15 * direction);
   }
 
   $scope.$watch("searchText", function() {
@@ -67,4 +70,37 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
     $scope.length = prefilter($scope.all, $scope.searchText).length;
   });
   $scope.sortTable($scope.selected);
+
+  $scope.round = function(num) {
+    return Math.round(num)
+  };
+
+  $scope.showTooltip = function(athlete, medal) {
+    var name = athlete.first + " " + athlete.last;
+    if (medalData[name] && medalData[name][medal]) {
+      $scope.tooltip.athlete = name;
+      $scope.tooltip.medal = medal;
+      $scope.tooltip.data = medalData[name][medal];
+    } else {
+      $scope.tooltip = {};
+    }
+  }
+
+  var tooltip = document.querySelector(".tooltip");
+
+  document.body.addEventListener('mousemove', function(e) {
+    // if (document.querySelector(".hover")) document.querySelector(".hover").classList.remove("hover");
+    if (e.target.classList.contains("medal") && e.target.innerHTML > 0) {
+      $scope.left = e.clientX;
+      $scope.top = e.clientY;
+      $scope.$apply();
+      // e.target.classList.add("hover");
+      tooltip.classList.remove("hide");
+    } else {
+      tooltip.classList.add("hide");
+    }
+  });
 }]);
+
+
+
