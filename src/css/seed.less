@@ -2,7 +2,7 @@
 
 body {
   max-width: 960px;
-  margin: 20px auto;
+  margin: 40px auto;
   font-family: @df-sans;
 }
 
@@ -77,6 +77,11 @@ th {
     display: none;
   }
 }
+.country {
+  @media @tablet {
+    display: none;
+  }
+}
 
 .medal-swatch {
   height: 10px;
@@ -121,11 +126,15 @@ td, th {
   }
 }
 td {
-  font-size: 14px;
+  font-size: 12px;
 
   &.bold {
     font-weight: bold;
     cursor: pointer;
+  }
+
+  &.medal {
+    font-size: 13px;
   }
 
   @media @mobile {

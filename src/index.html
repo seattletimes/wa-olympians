@@ -28,7 +28,8 @@
 
           <tr ng-repeat="a in all | filter:searchText | limitTo : 15 : index">
             <td class="name">{{a.first}} {{a.last}}
-            <td class="sport">{{a.sport}}
+            <td class="sport">{{a.sport}} 
+            <td class="country">{{a.country}}
             <td class="years">{{a.season}} {{a.years}}
             <td class="affiliation">{{a.affiliation}}
             <td ng-mouseover="showTooltip(a, 'Gold')" class="gold medal" ng-class="{bold: a.gold > 0}">{{a.gold}}

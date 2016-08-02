@@ -15,6 +15,7 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
   $scope.headers = [
     { title: "Name", short: "last", medal: "" },
     { title: "Sport", short: "sport", medal: "" },
+    { title: "Country", short: "country", medal: "" },
     { title: "Competed", short: "years_shortened", medal: "" },
     { title: "Affiliation", short: "affiliation", medal: "" },
     { title: "Gold", short: "gold", medal: "medal" },
