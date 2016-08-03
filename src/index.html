@@ -47,7 +47,7 @@
         </div>
 
         <div class="arrows">
-          <div class="pages">Page {{index / 15 + 1}} of {{round(length / 15) + 1}}</div>
+          <div class="pages">Page {{index / 15 + 1}} of {{round(length / 15)}}</div>
           <div class="advance" ng-click="advance(-1)" ng-class="{disabled: index < 1}">< Previous</div> <span ng-class="{disabled: index < 1 || (index + 15) >= length}">|</span> <div class="advance" ng-click="advance(1)" ng-class="{disabled: (index + 15) >= length}">Next ></div>
         </div>
         

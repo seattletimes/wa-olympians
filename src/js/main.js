@@ -73,7 +73,7 @@ app.controller("OlympicsController", ["$scope", "$filter", function($scope, $fil
   $scope.sortTable($scope.selected);
 
   $scope.round = function(num) {
-    return Math.round(num)
+    return Math.ceil(num)
   };
 
   $scope.showTooltip = function(athlete, medal) {
