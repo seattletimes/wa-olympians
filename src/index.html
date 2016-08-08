@@ -21,6 +21,8 @@
           <input type="text" ng-model="searchText">
         </div>
 
+        <div class="note">This table includes athletes who actually competed in the Olympics. It does not include athletes who made their respective team but didn't compete (due to injury, boycott, etc).</div>
+
         <table>
           <tr>
             <th ng-repeat="header in headers" class="{{header.short}} {{header.medal}}" ng-class="{selected: header == selected}" ng-click="sortTable(header)"><div class="title">{{header.title}}</div> <div class="medal-swatch" ng-if="header.medal"></div> </th>
@@ -51,6 +53,7 @@
           <div class="advance" ng-click="advance(-1)" ng-class="{disabled: index < 1}">< Previous</div> <span ng-class="{disabled: index < 1 || (index + 15) >= length}">|</span> <div class="advance" ng-click="advance(1)" ng-class="{disabled: (index + 15) >= length}">Next ></div>
         </div>
         
+        <div class="source">Source: <a href="http://www.sports-reference.com/olympics/">Sports-Reference.com</a></div>
         <div class="credit">AUDREY CARLSEN / THE SEATTLE TIMES</div>
 
       </div>
